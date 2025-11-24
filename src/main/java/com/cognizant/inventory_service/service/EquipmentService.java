@@ -1,31 +1,32 @@
 package com.cognizant.inventory_service.service;
- 
+
 import com.cognizant.inventory_service.entity.Equipment;
 import com.cognizant.inventory_service.repository.EquipmentRepository;
+import com.cognizant.inventory_service.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
- 
+
 import java.util.List;
 import java.util.Optional;
- 
+
 @Service
 public class EquipmentService {
- 
+
     @Autowired
     private EquipmentRepository equipmentRepository;
- 
+
     public List<Equipment> getAllEquipment() {
         return equipmentRepository.findAll();
     }
- 
+
     public Optional<Equipment> getEquipmentById(Long id) {
         return equipmentRepository.findById(id);
     }
- 
+
     public Equipment addEquipment(Equipment equipment) {
         return equipmentRepository.save(equipment);
     }
- 
+
     public Equipment updateEquipment(Long id, Equipment updatedEquipment) {
         return equipmentRepository.findById(id)
                 .map(existing -> {
@@ -34,11 +35,15 @@ public class EquipmentService {
                     existing.setGame_id(updatedEquipment.getGame_id());
                     return equipmentRepository.save(existing);
                 })
-                .orElseThrow(() -> new RuntimeException("Equipment not found with id " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Equipment not found with id " + id));
     }
- 
-    public void deleteEquipment(Long id) {
+
+    // ✅ Updated delete method
+    public String deleteEquipment(Long id) {
+        if (!equipmentRepository.existsById(id)) {
+            throw new ResourceNotFoundException("The id " + id + " does not exist");
+        }
         equipmentRepository.deleteById(id);
+        return "The id " + id + " deleted successfully";
     }
 }
- 
