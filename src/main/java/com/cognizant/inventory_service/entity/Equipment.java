@@ -1,10 +1,10 @@
 package com.cognizant.inventory_service.entity;
- 
+
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
- 
+
 @Entity
 @Table(name = "equipment")
 @Getter
@@ -12,40 +12,40 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = "allotments")  // Prevent circular reference
+@ToString(exclude = "allotments") // Prevent circular reference
 public class Equipment {
- 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "equipment_id")
-    private Long equipment_id;
- 
-    @Column(name = "equipment_name", nullable = false)
-    private String equipment_name;
- 
-    @Column(name = "equipment_quantity", nullable = false)
-    private int equipment_quantity;
- 
-    @Column(name = "game_id", nullable = false)
-    private Long game_id; // Reference to external Game Catalog Service
- 
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime created_at;
- 
-    @Column(name = "modified_at", nullable = false)
-    private LocalDateTime modified_at;
- 
+    //@Column(name = "equipment_id")
+    private Long equipmentId;
+
+    @Column(nullable = false)
+    private String equipmentName;
+
+    @Column(nullable = false)
+    private int equipmentQuantity;
+
+    @Column(nullable = false)
+    private Long gameId; // Reference to external Game Catalog Service
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false)
+    private LocalDateTime modifiedAt;
+
     @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Allotment> allotments;
- 
+
     @PrePersist
     protected void onCreate() {
-        this.created_at = LocalDateTime.now();
-        this.modified_at = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
+        this.modifiedAt = LocalDateTime.now();
     }
- 
+
     @PreUpdate
     protected void onUpdate() {
-        this.modified_at = LocalDateTime.now();
+        this.modifiedAt = LocalDateTime.now();
     }
 }

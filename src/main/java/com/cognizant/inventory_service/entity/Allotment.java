@@ -1,9 +1,9 @@
 package com.cognizant.inventory_service.entity;
- 
+
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
- 
+
 @Entity
 @Table(name = "allotments")
 @Getter
@@ -13,32 +13,32 @@ import java.time.LocalDateTime;
 @Builder
 @ToString(exclude = "equipment") // Prevent circular reference
 public class Allotment {
- 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int allotment_id;
- 
+    private int allotmentId;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "equipment_id", nullable = false)
+    @JoinColumn(name = "equipmentId", nullable = false)
     private Equipment equipment;
- 
+
     @Column(nullable = false)
-    private int user_id;
- 
+    private int userId;
+
     @Column(nullable = false)
-    private LocalDateTime created_at = LocalDateTime.now();
- 
+    private LocalDateTime createdAt = LocalDateTime.now();
+
     @Column(nullable = false)
-    private LocalDateTime modified_at = LocalDateTime.now();
- 
+    private LocalDateTime modifiedAt = LocalDateTime.now();
+
     @PrePersist
     protected void onCreate() {
-        this.created_at = LocalDateTime.now();
-        this.modified_at = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
+        this.modifiedAt = LocalDateTime.now();
     }
- 
+
     @PreUpdate
     protected void onUpdate() {
-        this.modified_at = LocalDateTime.now();
+        this.modifiedAt = LocalDateTime.now();
     }
 }

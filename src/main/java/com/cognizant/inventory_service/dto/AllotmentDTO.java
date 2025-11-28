@@ -5,56 +5,56 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public class AllotmentDTO {
-	
-    private Long allotment_id; // Optional for create
+
+    private Long allotmentId; // Optional for create
 
     @NotNull(message = "Equipment ID cannot be null")
-    private Long equipment_id;
+    private Long equipmentId;
 
     @Min(value = 1, message = "User ID must be greater than 0")
-    private int user_id;
+    private int userId;
 
-    private LocalDateTime created_at;
-    private LocalDateTime modified_at;
+    private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
 
     // Getters and Setters
-    public Long getAllotment_id() {
-        return allotment_id;
+    public Long getAllotmentId() {
+        return allotmentId;
     }
 
-    public void setAllotment_id(Long allotment_id) {
-        this.allotment_id = allotment_id;
+    public void setAllotmentId(Long allotmentId) {
+        this.allotmentId = allotmentId;
     }
 
-    public Long getEquipment_id() {
-        return equipment_id;
+    public Long getEquipmentId() {
+        return equipmentId;
     }
 
-    public void setEquipment_id(Long equipment_id) {
-        this.equipment_id = equipment_id;
+    public void setEquipmentId(Long equipmentId) {
+        this.equipmentId = equipmentId;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public LocalDateTime getCreated_at() {
-        return created_at;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(LocalDateTime created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public LocalDateTime getModified_at() {
-        return modified_at;
+    public LocalDateTime getModifiedAt() {
+        return modifiedAt;
     }
 
-    public void setModified_at(LocalDateTime modified_at) {
-        this.modified_at = modified_at;
+    public void setModifiedAt(LocalDateTime modifiedAt) {
+        this.modifiedAt = modifiedAt;
     }
 }

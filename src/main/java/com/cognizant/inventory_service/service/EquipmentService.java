@@ -30,9 +30,9 @@ public class EquipmentService {
     public Equipment updateEquipment(Long id, Equipment updatedEquipment) {
         return equipmentRepository.findById(id)
                 .map(existing -> {
-                    existing.setEquipment_name(updatedEquipment.getEquipment_name());
-                    existing.setEquipment_quantity(updatedEquipment.getEquipment_quantity());
-                    existing.setGame_id(updatedEquipment.getGame_id());
+                    existing.setEquipmentName(updatedEquipment.getEquipmentName());
+                    existing.setEquipmentQuantity(updatedEquipment.getEquipmentQuantity());
+                    existing.setGameId(updatedEquipment.getGameId());
                     return equipmentRepository.save(existing);
                 })
                 .orElseThrow(() -> new ResourceNotFoundException("Equipment not found with id " + id));

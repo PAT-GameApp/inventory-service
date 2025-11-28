@@ -19,7 +19,7 @@ public class EquipmentController {
     @Autowired
     private EquipmentService equipmentService;
 
-    @GetMapping
+    @GetMapping("/")
     public List<EquipmentDTO> getAllEquipment() {
         List<Equipment> equipmentList = equipmentService.getAllEquipment();
         return equipmentList.stream().map(this::convertToDTO).collect(Collectors.toList());
@@ -58,21 +58,21 @@ public class EquipmentController {
     // --- Conversion Methods ---
     private EquipmentDTO convertToDTO(Equipment equipment) {
         EquipmentDTO dto = new EquipmentDTO();
-        dto.setEquipment_id(equipment.getEquipment_id());
-        dto.setEquipment_name(equipment.getEquipment_name());
-        dto.setEquipment_quantity(equipment.getEquipment_quantity());
-        dto.setGame_id(equipment.getGame_id());
-        dto.setCreated_at(equipment.getCreated_at());
-        dto.setModified_at(equipment.getModified_at());
+        dto.setEquipmentId(equipment.getEquipmentId());
+        dto.setEquipmentName(equipment.getEquipmentName());
+        dto.setEquipmentQuantity(equipment.getEquipmentQuantity());
+        dto.setGameId(equipment.getGameId());
+        dto.setCreatedAt(equipment.getCreatedAt());
+        dto.setModifiedAt(equipment.getModifiedAt());
         return dto;
     }
 
     private Equipment convertToEntity(EquipmentDTO dto) {
         Equipment equipment = new Equipment();
-        equipment.setEquipment_id(dto.getEquipment_id());
-        equipment.setEquipment_name(dto.getEquipment_name());
-        equipment.setEquipment_quantity(dto.getEquipment_quantity());
-        equipment.setGame_id(dto.getGame_id());
+        equipment.setEquipmentId(dto.getEquipmentId());
+        equipment.setEquipmentName(dto.getEquipmentName());
+        equipment.setEquipmentQuantity(dto.getEquipmentQuantity());
+        equipment.setGameId(dto.getGameId());
         return equipment;
     }
 }
