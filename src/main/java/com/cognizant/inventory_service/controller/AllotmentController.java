@@ -41,10 +41,12 @@ public class AllotmentController {
                 .orElseThrow(() -> new ResourceNotFoundException("Allotment not found with id " + id));
         return convertToDTO(allotment);
     }
+
     @PostMapping("/addAllotment")
     public AllotmentDTO addAllotment(@Valid @RequestBody AllotmentDTO dto) {
-        Equipment equipment = equipmentService.getEquipmentById(dto.getEquipment_id())
-                .orElseThrow(() -> new ResourceNotFoundException("Equipment not found with id " + dto.getEquipment_id()));
+        Equipment equipment = equipmentService.getEquipmentById(dto.getEquipmentId())
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("Equipment not found with id " + dto.getEquipmentId()));
 
         Allotment allotment = convertToEntity(dto, equipment);
         Allotment saved = allotmentService.addAllotment(allotment);
@@ -61,23 +63,23 @@ public class AllotmentController {
     // --- Conversion Methods ---
     private AllotmentDTO convertToDTO(Allotment allotment) {
         AllotmentDTO dto = new AllotmentDTO();
-        dto.setAllotment_id((long) allotment.getAllotment_id());
-        dto.setUser_id(allotment.getUser_id());
-        dto.setCreated_at(allotment.getCreated_at());
-        dto.setModified_at(allotment.getModified_at());
-        dto.setEquipment_id(allotment.getEquipment().getEquipment_id());
+        dto.setAllotmentId((long) allotment.getAllotmentId());
+        dto.setUserId(allotment.getUserId());
+        dto.setCreatedAt(allotment.getCreatedAt());
+        dto.setModifiedAt(allotment.getModifiedAt());
+        dto.setEquipmentId(allotment.getEquipment().getEquipmentId());
         return dto;
     }
 
     private Allotment convertToEntity(AllotmentDTO dto, Equipment equipment) {
         Allotment allotment = new Allotment();
-        if (dto.getAllotment_id() != null) {
-            allotment.setAllotment_id(dto.getAllotment_id().intValue());
+        if (dto.getAllotmentId() != null) {
+            allotment.setAllotmentId(dto.getAllotmentId().intValue());
         }
-        allotment.setUser_id(dto.getUser_id());
+        allotment.setUserId(dto.getUserId());
         allotment.setEquipment(equipment);
-        allotment.setCreated_at(dto.getCreated_at() != null ? dto.getCreated_at() : LocalDateTime.now());
-        allotment.setModified_at(LocalDateTime.now());
+        allotment.setCreatedAt(dto.getCreatedAt() != null ? dto.getCreatedAt() : LocalDateTime.now());
+        allotment.setModifiedAt(LocalDateTime.now());
         return allotment;
     }
 }

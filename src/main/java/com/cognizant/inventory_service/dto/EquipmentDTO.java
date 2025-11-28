@@ -9,70 +9,70 @@ import java.util.List;
 
 public class EquipmentDTO {
 
-    private Long equipment_id; // Optional for create
+    private Long equipmentId; // Optional for create
 
     @NotBlank(message = "Equipment name cannot be blank")
     @Size(min = 2, max = 50, message = "Equipment name must be between 2 and 50 characters")
-    private String equipment_name;
+    private String equipmentName;
 
     @Min(value = 1, message = "Equipment quantity must be greater than 0")
-    private int equipment_quantity;
+    private int equipmentQuantity;
 
     @NotNull(message = "Game ID cannot be null")
-    private Long game_id;
+    private Long gameId;
 
-    private LocalDateTime created_at;
-    private LocalDateTime modified_at;
+    private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
 
     private List<Long> allotmentIds;
 
     // Getters and Setters
-    public Long getEquipment_id() {
-        return equipment_id;
+    public Long getEquipmentId() {
+        return equipmentId;
     }
 
-    public void setEquipment_id(Long equipment_id) {
-        this.equipment_id = equipment_id;
+    public void setEquipmentId(Long equipmentId) {
+        this.equipmentId = equipmentId;
     }
 
-    public String getEquipment_name() {
-        return equipment_name;
+    public String getEquipmentName() {
+        return equipmentName;
     }
 
-    public void setEquipment_name(String equipment_name) {
-        this.equipment_name = equipment_name;
+    public void setEquipmentName(String equipmentName) {
+        this.equipmentName = equipmentName;
     }
 
-    public int getEquipment_quantity() {
-        return equipment_quantity;
+    public int getEquipmentQuantity() {
+        return equipmentQuantity;
     }
 
-    public void setEquipment_quantity(int equipment_quantity) {
-        this.equipment_quantity = equipment_quantity;
+    public void setEquipmentQuantity(int equipmentQuantity) {
+        this.equipmentQuantity = equipmentQuantity;
     }
 
-    public Long getGame_id() {
-        return game_id;
+    public Long getGameId() {
+        return gameId;
     }
 
-    public void setGame_id(Long game_id) {
-        this.game_id = game_id;
+    public void setGameId(Long gameId) {
+        this.gameId = gameId;
     }
 
-    public LocalDateTime getCreated_at() {
-        return created_at;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(LocalDateTime created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public LocalDateTime getModified_at() {
-        return modified_at;
+    public LocalDateTime getModifiedAt() {
+        return modifiedAt;
     }
 
-    public void setModified_at(LocalDateTime modified_at) {
-        this.modified_at = modified_at;
+    public void setModifiedAt(LocalDateTime modifiedAt) {
+        this.modifiedAt = modifiedAt;
     }
 
     public List<Long> getAllotmentIds() {
