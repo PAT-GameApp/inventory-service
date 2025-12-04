@@ -19,7 +19,7 @@ public class EquipmentController {
     @Autowired
     private EquipmentService equipmentService;
 
-    @GetMapping("/")
+    @GetMapping()
     public List<EquipmentDTO> getAllEquipment() {
         List<Equipment> equipmentList = equipmentService.getAllEquipment();
         return equipmentList.stream().map(this::convertToDTO).collect(Collectors.toList());
@@ -33,7 +33,7 @@ public class EquipmentController {
     }
 
     // ✅ Added @Valid for validation
-    @PostMapping("/add")
+    @PostMapping()
     public EquipmentDTO addEquipment(@Valid @RequestBody EquipmentDTO equipmentDTO) {
         Equipment equipment = convertToEntity(equipmentDTO);
         Equipment savedEquipment = equipmentService.addEquipment(equipment);

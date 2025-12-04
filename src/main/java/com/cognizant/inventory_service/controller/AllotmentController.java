@@ -42,7 +42,7 @@ public class AllotmentController {
         return convertToDTO(allotment);
     }
 
-    @PostMapping("/addAllotment")
+    @PostMapping()
     public AllotmentDTO addAllotment(@Valid @RequestBody AllotmentDTO dto) {
         Equipment equipment = equipmentService.getEquipmentById(dto.getEquipmentId())
                 .orElseThrow(
