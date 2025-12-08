@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/allotments")
+@CrossOrigin(origins = "https://localhost:5173")
 public class AllotmentController {
 
     @Autowired
@@ -27,7 +28,7 @@ public class AllotmentController {
     @Autowired
     private EquipmentService equipmentService;
 
-    @GetMapping
+    @GetMapping("/")
     public List<AllotmentDTO> getAllAllotments() {
         return allotmentService.getAllAllotments()
                 .stream()
@@ -42,7 +43,7 @@ public class AllotmentController {
         return convertToDTO(allotment);
     }
 
-    @PostMapping("/addAllotment")
+    @PostMapping("/")
     public AllotmentDTO addAllotment(@Valid @RequestBody AllotmentDTO dto) {
         Equipment equipment = equipmentService.getEquipmentById(dto.getEquipmentId())
                 .orElseThrow(
