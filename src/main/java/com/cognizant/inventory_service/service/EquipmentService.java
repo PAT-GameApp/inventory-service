@@ -1,5 +1,7 @@
 package com.cognizant.inventory_service.service;
 
+import com.cognizant.inventory_service.dto.EquipmentAvailableResponseDTO;
+import com.cognizant.inventory_service.entity.Allotment;
 import com.cognizant.inventory_service.entity.Equipment;
 import com.cognizant.inventory_service.repository.EquipmentRepository;
 import com.cognizant.inventory_service.exception.ResourceNotFoundException;
@@ -38,7 +40,7 @@ public class EquipmentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Equipment not found with id " + id));
     }
 
-    // ✅ Updated delete method
+    // Updated delete method
     public String deleteEquipment(Long id) {
         if (!equipmentRepository.existsById(id)) {
             throw new ResourceNotFoundException("The id " + id + " does not exist");
@@ -46,4 +48,17 @@ public class EquipmentService {
         equipmentRepository.deleteById(id);
         return "The id " + id + " deleted successfully";
     }
+
+    public EquipmentAvailableResponseDTO getEquipmentAvailability(Long id) {
+        Equipment equipment = equipmentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Equipment not found with id: "));
+        List<Allotment> activeAllotments = equipmentRepository.findActiveAllotments(id);
+        int availableQuantity = equipment.getEquipmentQuantity() - activeAllotments.size();
+
+        return EquipmentAvailableResponseDTO
+                .builder()
+                .availableQuantity(availableQuantity)
+                .build();
+    }
+
 }

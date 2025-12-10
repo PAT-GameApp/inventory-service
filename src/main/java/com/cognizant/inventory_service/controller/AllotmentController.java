@@ -8,6 +8,7 @@ import com.cognizant.inventory_service.service.AllotmentService;
 import com.cognizant.inventory_service.service.EquipmentService;
 
 import jakarta.validation.Valid;
+import jakarta.ws.rs.Path;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +38,7 @@ public class AllotmentController {
     }
 
     @GetMapping("/{id}")
-    public AllotmentDTO getAllotmentById(@PathVariable Integer id) {
+    public AllotmentDTO getAllotmentById(@PathVariable Long id) {
         Allotment allotment = allotmentService.getAllotmentById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Allotment not found with id " + id));
         return convertToDTO(allotment);
@@ -54,9 +55,9 @@ public class AllotmentController {
         return convertToDTO(saved);
     }
 
-    // ✅ Updated delete endpoint to return success message
+    // Updated delete endpoint to return success message
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteAllotment(@PathVariable Integer id) {
+    public ResponseEntity<String> deleteAllotment(@PathVariable Long id) {
         String message = allotmentService.deleteAllotment(id);
         return ResponseEntity.ok(message);
     }
@@ -75,7 +76,7 @@ public class AllotmentController {
     private Allotment convertToEntity(AllotmentDTO dto, Equipment equipment) {
         Allotment allotment = new Allotment();
         if (dto.getAllotmentId() != null) {
-            allotment.setAllotmentId(dto.getAllotmentId().intValue());
+            allotment.setAllotmentId(dto.getAllotmentId().longValue());
         }
         allotment.setUserId(dto.getUserId());
         allotment.setEquipment(equipment);

@@ -1,5 +1,6 @@
 package com.cognizant.inventory_service.controller;
 
+import com.cognizant.inventory_service.dto.EquipmentAvailableResponseDTO;
 import com.cognizant.inventory_service.dto.EquipmentDTO;
 import com.cognizant.inventory_service.entity.Equipment;
 import com.cognizant.inventory_service.exception.ResourceNotFoundException;
@@ -32,7 +33,7 @@ public class EquipmentController {
         return convertToDTO(equipment);
     }
 
-    // ✅ Added @Valid for validation
+    // Added @Valid for validation
     @PostMapping("/add")
     public EquipmentDTO addEquipment(@Valid @RequestBody EquipmentDTO equipmentDTO) {
         Equipment equipment = convertToEntity(equipmentDTO);
@@ -40,7 +41,7 @@ public class EquipmentController {
         return convertToDTO(savedEquipment);
     }
 
-    // ✅ Added @Valid for validation
+    // Added @Valid for validation
     @PutMapping("/{id}")
     public EquipmentDTO updateEquipment(@PathVariable Long id, @Valid @RequestBody EquipmentDTO equipmentDTO) {
         Equipment updatedEntity = convertToEntity(equipmentDTO);
@@ -48,11 +49,18 @@ public class EquipmentController {
         return convertToDTO(updatedEquipment);
     }
 
-    // ✅ Delete endpoint returns success message
+    // Delete endpoint returns success message
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteEquipment(@PathVariable Long id) {
         String message = equipmentService.deleteEquipment(id);
         return ResponseEntity.ok(message);
+    }
+
+    // method to check available equipment quantity
+    @GetMapping("/{id}/available")
+    public ResponseEntity<?> getAvailableQuantity(@PathVariable Long id) {
+        EquipmentAvailableResponseDTO response = equipmentService.getEquipmentAvailability(id);
+        return ResponseEntity.ok(response);
     }
 
     // --- Conversion Methods ---

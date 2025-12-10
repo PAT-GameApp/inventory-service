@@ -19,7 +19,7 @@ public class AllotmentService {
         return allotmentRepository.findAll();
     }
 
-    public Optional<Allotment> getAllotmentById(Integer id) {
+    public Optional<Allotment> getAllotmentById(Long id) {
         return allotmentRepository.findById(id);
     }
 
@@ -27,8 +27,8 @@ public class AllotmentService {
         return allotmentRepository.save(allotment);
     }
 
-    // ✅ Updated delete method
-    public String deleteAllotment(Integer id) {
+    // Updated delete method
+    public String deleteAllotment(Long id) {
         if (!allotmentRepository.existsById(id)) {
             throw new ResourceNotFoundException("The id " + id + " does not exist");
         }

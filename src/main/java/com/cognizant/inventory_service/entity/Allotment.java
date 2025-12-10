@@ -16,11 +16,13 @@ public class Allotment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int allotmentId;
+    private Long allotmentId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "equipmentId", nullable = false)
+    @JoinColumn(name = "equipment_id", nullable = false)
     private Equipment equipment;
+
+    private boolean returned;
 
     @Column(nullable = false)
     private int userId;
