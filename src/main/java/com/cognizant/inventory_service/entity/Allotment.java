@@ -24,8 +24,10 @@ public class Allotment {
 
     private boolean returned;
 
+    private Long bookingId;
+
     @Column(nullable = false)
-    private int userId;
+    private Long userId;
 
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
