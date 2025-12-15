@@ -24,4 +24,8 @@ public class AllotmentDTO {
     private Long bookingId;
 
     private Long userId;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime modifiedAt;
 }
