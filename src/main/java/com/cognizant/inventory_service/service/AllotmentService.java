@@ -35,4 +35,11 @@ public class AllotmentService {
         allotmentRepository.deleteById(id);
         return "The id " + id + " deleted successfully";
     }
+
+    public Allotment returnAllotment(Long id) {
+        Allotment allotment = allotmentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Allotment not found with id " + id));
+        allotment.setReturned(true);
+        return allotmentRepository.save(allotment);
+    }
 }

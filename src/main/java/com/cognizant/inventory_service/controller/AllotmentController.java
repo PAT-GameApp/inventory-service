@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/allotments")
-@CrossOrigin(origins = "https://localhost:5173")
 public class AllotmentController {
 
     @Autowired
@@ -62,6 +61,12 @@ public class AllotmentController {
         return ResponseEntity.ok(message);
     }
 
+    @PostMapping("/{id}/return")
+    public ResponseEntity<AllotmentDTO> returnAllotment(@PathVariable Long id) {
+        Allotment allotment = allotmentService.returnAllotment(id);
+        return ResponseEntity.ok(convertToDTO(allotment));
+    }
+
     // --- Conversion Methods ---
     private AllotmentDTO convertToDTO(Allotment allotment) {
         AllotmentDTO dto = new AllotmentDTO();
@@ -70,6 +75,8 @@ public class AllotmentController {
         dto.setCreatedAt(allotment.getCreatedAt());
         dto.setModifiedAt(allotment.getModifiedAt());
         dto.setEquipmentId(allotment.getEquipment().getEquipmentId());
+        dto.setReturned(allotment.isReturned());
+        dto.setBookingId(allotment.getBookingId());
         return dto;
     }
 
