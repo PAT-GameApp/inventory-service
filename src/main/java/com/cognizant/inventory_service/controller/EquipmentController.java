@@ -6,12 +6,19 @@ import com.cognizant.inventory_service.entity.Equipment;
 import com.cognizant.inventory_service.exception.ResourceNotFoundException;
 import com.cognizant.inventory_service.service.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.cognizant.inventory_service.util.PagingUtil;
 
 @RestController
 @RequestMapping("/equipment")
@@ -21,9 +28,23 @@ public class EquipmentController {
     private EquipmentService equipmentService;
 
     @GetMapping("/")
-    public List<EquipmentDTO> getAllEquipment() {
-        List<Equipment> equipmentList = equipmentService.getAllEquipment();
-        return equipmentList.stream().map(this::convertToDTO).collect(Collectors.toList());
+    public ResponseEntity<List<EquipmentDTO>> getAllEquipment(
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size,
+            @RequestParam(required = false) String sort,
+            @RequestParam(required = false) String direction) {
+        List<String> allowedSort = Arrays.asList("equipmentId", "equipmentName", "equipmentQuantity", "gameId", "createdAt", "modifiedAt");
+        Pageable pageable = PagingUtil.buildPageable(page, size, sort, direction, allowedSort);
+        if (pageable != null) {
+            Page<Equipment> p = equipmentService.getAllEquipment(pageable);
+            HttpHeaders headers = PagingUtil.buildHeaders(p);
+            List<EquipmentDTO> body = p.getContent().stream().map(this::convertToDTO).collect(Collectors.toList());
+            return ResponseEntity.ok().headers(headers).body(body);
+        }
+        Sort sortSpec = PagingUtil.buildSort(sort, direction, allowedSort);
+        List<Equipment> list = equipmentService.getAllEquipment(sortSpec);
+        List<EquipmentDTO> body = list.stream().map(this::convertToDTO).collect(Collectors.toList());
+        return ResponseEntity.ok(body);
     }
 
     @GetMapping("/{id}")

@@ -6,6 +6,9 @@ import com.cognizant.inventory_service.entity.Equipment;
 import com.cognizant.inventory_service.repository.EquipmentRepository;
 import com.cognizant.inventory_service.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +22,14 @@ public class EquipmentService {
 
     public List<Equipment> getAllEquipment() {
         return equipmentRepository.findAll();
+    }
+
+    public Page<Equipment> getAllEquipment(Pageable pageable) {
+        return equipmentRepository.findAll(pageable);
+    }
+
+    public List<Equipment> getAllEquipment(Sort sort) {
+        return sort == null || sort.isUnsorted() ? equipmentRepository.findAll() : equipmentRepository.findAll(sort);
     }
 
     public Optional<Equipment> getEquipmentById(Long id) {

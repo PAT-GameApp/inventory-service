@@ -11,12 +11,18 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.Path;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import com.cognizant.inventory_service.util.PagingUtil;
 
 @RestController
 @RequestMapping("/allotments")
@@ -29,11 +35,25 @@ public class AllotmentController {
     private EquipmentService equipmentService;
 
     @GetMapping("/")
-    public List<AllotmentDTO> getAllAllotments() {
-        return allotmentService.getAllAllotments()
+    public ResponseEntity<List<AllotmentDTO>> getAllAllotments(
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size,
+            @RequestParam(required = false) String sort,
+            @RequestParam(required = false) String direction) {
+        List<String> allowedSort = Arrays.asList("allotmentId", "userId", "createdAt", "modifiedAt", "bookingId", "returned");
+        Pageable pageable = PagingUtil.buildPageable(page, size, sort, direction, allowedSort);
+        if (pageable != null) {
+            Page<Allotment> p = allotmentService.getAllAllotments(pageable);
+            HttpHeaders headers = PagingUtil.buildHeaders(p);
+            List<AllotmentDTO> body = p.getContent().stream().map(this::convertToDTO).collect(Collectors.toList());
+            return ResponseEntity.ok().headers(headers).body(body);
+        }
+        Sort sortSpec = PagingUtil.buildSort(sort, direction, allowedSort);
+        List<AllotmentDTO> body = allotmentService.getAllAllotments(sortSpec)
                 .stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
+        return ResponseEntity.ok(body);
     }
 
     @GetMapping("/{id}")

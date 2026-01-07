@@ -4,6 +4,9 @@ import com.cognizant.inventory_service.entity.Allotment;
 import com.cognizant.inventory_service.repository.AllotmentRepository;
 import com.cognizant.inventory_service.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +20,14 @@ public class AllotmentService {
 
     public List<Allotment> getAllAllotments() {
         return allotmentRepository.findAll();
+    }
+
+    public Page<Allotment> getAllAllotments(Pageable pageable) {
+        return allotmentRepository.findAll(pageable);
+    }
+
+    public List<Allotment> getAllAllotments(Sort sort) {
+        return sort == null || sort.isUnsorted() ? allotmentRepository.findAll() : allotmentRepository.findAll(sort);
     }
 
     public Optional<Allotment> getAllotmentById(Long id) {
