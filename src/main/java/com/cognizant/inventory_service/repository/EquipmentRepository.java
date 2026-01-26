@@ -22,4 +22,6 @@ public interface EquipmentRepository extends JpaRepository<Equipment, Long> {
             """)
     List<Allotment> findActiveAllotments(@Param("id") Long equipmentId);
 
+    List<Equipment> findByGameId(Long gameId);
+
 }

@@ -54,6 +54,12 @@ public class EquipmentController {
         return convertToDTO(equipment);
     }
 
+    @GetMapping("/game/{gameId}")
+    public List<EquipmentDTO> getEquipmentByGameId(@PathVariable Long gameId) {
+        List<Equipment> list = equipmentService.getEquipmentByGameId(gameId);
+        return list.stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
     // Added @Valid for validation
     @PostMapping("/add")
     public EquipmentDTO addEquipment(@Valid @RequestBody EquipmentDTO equipmentDTO) {

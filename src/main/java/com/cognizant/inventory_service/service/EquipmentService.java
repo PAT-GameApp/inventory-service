@@ -32,6 +32,10 @@ public class EquipmentService {
         return sort == null || sort.isUnsorted() ? equipmentRepository.findAll() : equipmentRepository.findAll(sort);
     }
 
+    public List<Equipment> getEquipmentByGameId(Long gameId) {
+        return equipmentRepository.findByGameId(gameId);
+    }
+
     public Optional<Equipment> getEquipmentById(Long id) {
         return equipmentRepository.findById(id);
     }
